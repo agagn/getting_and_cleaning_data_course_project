@@ -21,7 +21,7 @@ df <- df[, filtered_index]
 
 # Appropriately labels the data set with descriptive activity names.
 names(df) <- features[filtered_index, 2]
-names(df) <- gsub("[()-]", "", names(df))
+names(df) <- gsub("[()]", "", names(df))
 names(df) <- tolower(names(df))
 
 # Uses descriptive activity names to name the activities in the data set.
@@ -43,9 +43,7 @@ subject <- rbind(df1, df2)
 names(subject) <- "subject"
 df <- cbind(subject, df)
 
-# write tidy data set
-write.table(df, "uci_har_dataset_tidy_data.txt", row.names = FALSE)
-
 # Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
 ave_df <- aggregate(. ~ subject + activity, data = df, FUN = mean, na.rm = TRUE)
-write.table(ave_df, "uci_har_dataset_averages.txt", row.names = FALSE)
+# write tidy data
+write.table(ave_df, "tidy_data.txt", row.names = FALSE)
